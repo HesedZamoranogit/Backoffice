@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>REGISTER</title>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="banner__img">
+        <img class="banner__img--img" src="./img/Link-Click2.jpg" alt="" />
+      </div>
+      <div class="banner__login">
+        <header class="banner__header">
+          <h1 class="banner__titulo">REGISTER</h1>
+          <p class="banner__descripcion">
+            Obtain Notifications about Link Click.
+          </p>
+        </header>
+        <form action="" class="banner__form">
+          <div class="form-group">
+            <div class="form-group--inline">
+              <label class="form-group__label" for="username">Username</label>
+              <input
+                class="form-group__input"
+                type="text"
+                required
+                autocomplete="username"
+                placeholder="Enter your username"
+                oninput="localStorage.setItem('username', this.value);"
+                />
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const savedUsername = localStorage.getItem("username");
+                if (savedUsername) {
+                  document.querySelector('input[name="username"]').value = savedUsername;
+                }
+              });
+            </script>
+
+            </div>
+            <div class="form-group--Sex">
+              <label class="form-group__label" for="sex">Sex</label>
+              <label class="form-group__radio-label">
+                <input
+                  class="form-group__radio"
+                  type="radio"
+                  name="sex"
+                  value="male"
+                />
+                Male
+              </label>
+              <label class="form-group__radio-label">
+                <input
+                  class="form-group__radio"
+                  type="radio"
+                  name="sex"
+                  value="female"
+                />
+                Female
+              </label>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="email">Email</label>
+            <input
+              class="form-group__input"
+              type="email"
+              required
+              autocomplete="email"
+              placeholder="Enter your email"
+            />
+          </div>
+          <div class="form-group">
+            <label class="form-group__label" for="password">Password</label>
+            <input
+              class="form-group__input"
+              type="password"
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+          <div class="form-group">
+            <label for="" class="form-group__label">Date</label>
+            <input class="form-group__input" type="date" required />
+          </div>
+          <div class="form-group form-group--checkbox">
+            <input
+              class="form-group__checkbox"
+              type="checkbox"
+              id="terms"
+              required
+            />
+            <label class="form-group__checkbox-label" for="terms">
+              I agree to the Terms and Conditions
+            </label>
+          </div>
+          <button
+            class="banner__button"
+            type="submit"
+            formaction="Continue.html"
+          >
+            Continue with the Registration
+          </button>
+          <a href="index.html" class="banner__forgetpassword">Back to Login</a>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

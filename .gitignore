@@ -1,0 +1,57 @@
+# Node modules
+node_modules/
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Dependency locks (ignore if you want to version-lock)
+package-lock.json
+yarn.lock
+
+# Build output
+dist/
+build/
+.cache/
+.parcel-cache/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDEs and editors
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Bower & JSPM
+bower_components/
+jspm_packages/
+
+# Compiled / minified files and sourcemaps
+*.min.js
+*.min.css
+*.map
+
+# Sass cache
+.sass-cache/
+
+# Temporary / swap
+*.swp
+*.swo
+*.tmp
+*.bak
+
+# Coverage and test output
+coverage/
+.nyc_output/
+

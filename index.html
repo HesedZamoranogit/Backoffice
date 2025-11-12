@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>LOGIN</title>
+  </head>
+  <body>
+    <div class="banner">
+      <div class="banner__img">
+        <img class="banner__img--img" src="./img/Log_LinkClick.jpg" alt="" />
+      </div>
+      <div class="banner__login">
+        <header class="banner__header">
+          <h1 class="banner__titulo">LOGIN</h1>
+          <p class="banner__descripcion">
+            Obtain Notifications about Link Click.
+          </p>
+        </header>
+        <form action="" class="banner__form">
+          <div class="form-group">
+            <div class="form-group--inline">
+              <label class="form-group__label" for="username">Username</label>
+              <input
+                class="form-group__input"
+                type="text"
+                required
+                autocomplete="username"
+                placeholder="Enter your username"
+                oninput="localStorage.setItem('username', this.value);"
+                />
+
+            <script>
+              document.addEventListener("DOMContentLoaded", () => {
+                const savedUsername = localStorage.getItem("username");
+                if (savedUsername) {
+                  document.querySelector('input[name="username"]').value = savedUsername;
+                }
+              });
+            </script>
+
+            </div>
+          
+          </div>
+         
+          <div class="form-group">
+            <label class="form-group__label" for="password">Password</label>
+            <input
+              class="form-group__input"
+              type="password"
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+        
+          <button
+          id="btn_login"
+            class="banner__button"
+            type="submit"
+            formaction="home.html"
+            >
+            <script>
+            //Si se clickea el boton de login, no te permite entrar al home y te redirige al index.html y mostrar un mensaje de que no puedes
+            document.getElementById("btn_login").addEventListener("click", function(event) {
+              event.preventDefault();
+              window.location.href = "index.html";
+              alert("No puedes acceder a esta página.");
+            });
+            </script>
+            LOGIN
+          </button>
+          <div>
+          <a class="banner__forgetpassword">Forgot Password?</a>
+
+          <a 
+          href="Continue.html"  
+          class="banner__forgetpassword"
+          >Are you already registered?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
