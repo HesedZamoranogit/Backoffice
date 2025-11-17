@@ -3,15 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HOME</title>
+    <title>HOME - Link Click</title>
+    <link rel="stylesheet" href="home.css">
+    <script>
+        (function () {
+            const token = localStorage.getItem('token');
+            if (!token) {
+                // si no hay un token redirige a login
+                window.location.replace('index.html');
+            }
+        })();
+    </script>
 </head>
 <body>
-   <nav>
-    <h1>LINK CLICK</h1>
-    <a href="home.html">HOME</a>
-    <a href="about.html">ABOUT</a>
-    <a href="contact.html">CONTACT</a>
-    <a href="services.html">SERVICES</a>
-   </nav>
+    <nav class="navbar">
+        <div class="navbar__brand">BackOffice</div>
+        <div class="navbar__links">
+            <a href="home.html" class="navbar__link navbar__link--active">HOME</a>
+            <a href="about.html" class="navbar__link">IN PROCESS..</a>
+            <a href="contact.html" class="navbar__link">IN PROCESS..</a>
+            <a href="services.html" class="navbar__link">IN PROCESS..</a>
+            <a href="#" id="logout" class="navbar__link navbar__link--logout">LOGOUT</a>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Header Section -->
+        <section class="projects-header">
+            <div class="projects-header__content">
+                <h1 class="projects-header__title">My Projects</h1>
+                <p class="projects-header__description">
+                    Aqui agregare mis proyectos para mi portafolio
+                </p>
+            </div>
+            <button class="btn-add-project">
+                <span class="btn-add-project__icon">+</span>
+                <span class="btn-add-project__text">New Project</span>
+            </button>
+        </section>
+
+      
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const logout = document.getElementById('logout');
+            if (logout) {
+                logout.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    localStorage.removeItem('token');
+                    window.location.replace('index.html');
+                });
+            }
+        });
+    </script>
 </body>
 </html>

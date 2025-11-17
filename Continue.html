@@ -18,57 +18,47 @@
             Obtain Notifications about Link Click.
           </p>
         </header>
-        <form action="" class="banner__form">
+
+        <form
+          class="banner__form"
+          id="banner__form"
+        >
           <div class="form-group">
             <div class="form-group--inline">
-              <label class="form-group__label" for="username">Username</label>
+              <label class="form-group__label" for="name">Name</label>
               <input
                 class="form-group__input"
+                id="name"
+                name="name"
                 type="text"
                 required
                 autocomplete="username"
-                placeholder="Enter your username"
-                oninput="localStorage.setItem('username', this.value);"
-                />
-
-            <script>
-              document.addEventListener("DOMContentLoaded", () => {
-                const savedUsername = localStorage.getItem("username");
-                if (savedUsername) {
-                  document.querySelector('input[name="username"]').value = savedUsername;
-                }
-              });
-            </script>
-
-            </div>
-            <div class="form-group--Sex">
-              <label class="form-group__label" for="sex">Sex</label>
-              <label class="form-group__radio-label">
-                <input
-                  class="form-group__radio"
-                  type="radio"
-                  name="sex"
-                  value="male"
-                />
-                Male
-              </label>
-              <label class="form-group__radio-label">
-                <input
-                  class="form-group__radio"
-                  type="radio"
-                  name="sex"
-                  value="female"
-                />
-                Female
-              </label>
+                placeholder="Enter your name"
+              />
             </div>
           </div>
+
+          <div>
+            <label class="form-group__label" for="itsonId">ID</label>
+            <input
+              class="form-group__input"
+              type="text"
+              required
+              id="itsonId"
+              name="itsonId"
+              autocomplete="off"
+              placeholder="Enter your ITSON ID"
+            />
+          </div>
+
           <div class="form-group">
             <label class="form-group__label" for="email">Email</label>
             <input
               class="form-group__input"
               type="email"
               required
+              id="email"
+              name="email"
               autocomplete="email"
               placeholder="Enter your email"
             />
@@ -79,34 +69,43 @@
               class="form-group__input"
               type="password"
               required
+              id="password"
+              name="password"
               placeholder="Enter your password"
             />
           </div>
-          <div class="form-group">
-            <label for="" class="form-group__label">Date</label>
-            <input class="form-group__input" type="date" required />
-          </div>
-          <div class="form-group form-group--checkbox">
-            <input
-              class="form-group__checkbox"
-              type="checkbox"
-              id="terms"
-              required
-            />
-            <label class="form-group__checkbox-label" for="terms">
-              I agree to the Terms and Conditions
-            </label>
-          </div>
-          <button
-            class="banner__button"
-            type="submit"
-            formaction="Continue.html"
-          >
-            Continue with the Registration
-          </button>
+
+          
+          <button class="banner__button" type="submit">Register</button>
           <a href="index.html" class="banner__forgetpassword">Back to Login</a>
         </form>
       </div>
     </div>
+    <script type="module">
+      import { handleregister } from "./services/authregister.services.js";
+
+      const form = document.querySelector("#banner__form");
+      const nameInput = document.getElementById("name");
+      const idInput = document.getElementById("itsonId");
+      const emailInput = document.getElementById("email");
+      const passwordInput = document.getElementById("password");
+      //tumama@gmail.com
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const payload = {
+          name: nameInput.value.trim(),
+          itsonId: idInput.value.trim(),
+          email: emailInput.value.trim(),
+          password: passwordInput.value,
+        };
+        try {
+          const res = await handleregister(payload);
+          console.log("Registro OK:", res);
+        } catch (err) {
+          console.error("Registro falló:", err);
+          alert("No se pudo registrar. Intenta de nuevo.");
+        }
+      });
+    </script>
   </body>
 </html>
