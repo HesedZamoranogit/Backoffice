@@ -1,61 +1,402 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>HOME - Link Click</title>
-    <link rel="stylesheet" href="./../css/home.css">
+    <link rel="stylesheet" href="./../css/home.css" />
     <script>
-        (function () {
-            const token = localStorage.getItem('token');
-            if (!token) {
-                // si no hay un token redirige a login
-                window.location.replace('index.html');
-            }
-        })();
+      (function () {
+        const token = localStorage.getItem("token");
+        if (!token) {
+          // si no hay un token redirige a login
+          window.location.replace("index.html");
+        }
+      })();
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <nav class="navbar">
-        <div class="navbar__brand">BackOffice</div>
-        <div class="navbar__links">
-            <a href="home.html" class="navbar__link navbar__link--active">HOME</a>
-            <a href="about.html" class="navbar__link">IN PROCESS..</a>
-            <a href="contact.html" class="navbar__link">IN PROCESS..</a>
-            <a href="services.html" class="navbar__link">IN PROCESS..</a>
-            <a href="#" id="logout" class="navbar__link navbar__link--logout">LOGOUT</a>
-        </div>
+      <div class="navbar__brand">BackOffice</div>
+      <div class="navbar__links">
+        <a href="home.html" class="navbar__link navbar__link--active">HOME</a>
+        <a href="about.html" class="navbar__link">IN PROCESS..</a>
+        <a href="contact.html" class="navbar__link">IN PROCESS..</a>
+        <a href="services.html" class="navbar__link">IN PROCESS..</a>
+        <a href="#" id="logout" class="navbar__link navbar__link--logout"
+          >LOGOUT</a
+        >
+      </div>
     </nav>
 
     <div class="container">
-        <!-- Header Section -->
-        <section class="projects-header">
-            <div class="projects-header__content">
-                <h1 class="projects-header__title">My Projects</h1>
-                <p class="projects-header__description">
-                    Aqui agregare mis proyectos para mi portafolio
-                </p>
-            </div>
-            <button class="btn-add-project">
-                <span class="btn-add-project__icon">+</span>
-                <span class="btn-add-project__text">New Project</span>
-            </button>
-        </section>
+      <!-- Header Section -->
+      <section class="projects-header">
+        <div class="projects-header__content">
+          <h1 class="projects-header__title">My Projects</h1>
+          <p class="projects-header__description">
+            Aqui agregare mis proyectos para mi portafolio
+          </p>
+        </div>
+        <button class="btn-add-project">
+          <span class="btn-add-project__icon">+</span>
+          <span class="btn-add-project__text">New Project</span>
+        </button>
+      </section>
+    </div>
 
-      
+    <div class="container">
+      <ul id="projectsList" class="projects-list">
+        <!-- Los proyectos se renderizan aquí -->
+      </ul>
+      <!-- Template para una tarjeta de proyecto -->
+      <template id="project-card-template">
+        <li class="project-item" data-id="">
+          <div class="project-card">
+            <div class="project-card__header">
+              <h3 class="project-card__title"></h3>
+            </div>
+            <p class="project-card__description"></p>
+            <p class="project-card__tech">
+              <strong>Tech:</strong>
+              <span class="project-card__tech-list"></span>
+            </p>
+            <div class="project-card__footer">
+              <div>
+                <button class="btn-card btn-card--edit" data-view>
+                  Ver Detalles
+                </button>
+              </div>
+              <button class="btn-card btn-card--edit" data-edit>Editar</button>
+              <button class="btn-card btn-card--delete" data-del>
+                Eliminar
+              </button>
+            </div>
+          </div>
+        </li>
+      </template>
+    </div>
+    <div
+      id="project-modal"
+      class="modal"
+      aria-hidden="true"
+      role="dialog"
+      aria-modal="true"
+    >
+      <div class="modal__overlay" data-close></div>
+      <div class="modal__content">
+        <header class="modal__header">
+          <h2 class="modal__title" id="modal-title">Nuevo Proyecto</h2>
+          <button class="modal__close" data-close aria-label="Cerrar">
+            &times;
+          </button>
+        </header>
+        <form id="projectForm" class="modal__form">
+          <div class="form-field">
+            <label class="form-field__label" for="projectName"
+              >Nombre del proyecto</label
+            >
+            <input
+              class="form-field__input"
+              type="text"
+              name="name"
+              id="projectName"
+              required
+            />
+          </div>
+          <div class="form-field">
+            <label class="form-field__label" for="projectDesc"
+              >Descripción</label
+            >
+            <textarea
+              class="form-field__textarea"
+              name="description"
+              id="projectDesc"
+              rows="4"
+              required
+            ></textarea>
+          </div>
+          <div class="form-field">
+            <label class="form-field__label" for="projectRepo"
+              >Repositorio (URL)</label
+            >
+            <input
+              class="form-field__input"
+              type="url"
+              name="repository"
+              id="projectRepo"
+              placeholder="https://github.com/usuario/repositorio"
+            />
+          </div>
+
+          <div class="form-field">
+            <label class="form-field__label" for="projectTech"
+              >Tecnologías (coma)</label
+            >
+            <input
+              class="form-field__input"
+              type="text"
+              name="technologies"
+              id="projectTech"
+              placeholder="React, Node, Mongo"
+            />
+          </div>
+          <div class="form-field">
+            <label class="form-field__label" for="projectImages">Images:</label>
+            <input
+              class="form-field__input"
+              type="url"
+              name="images"
+              id="projectImages"
+              placeholder="Image URLs separated by commas"
+            />
+          </div>
+          <div class="modal__actions">
+            <button
+              data-close
+              aria-label="Cerrar"
+              type="button"
+              class="btn-card btn-card--delete"
+              id="cancelProject"
+            >
+              Regresar
+            </button>
+            <button
+              type="submit"
+              class="btn-card btn-card--save"
+              id="submitProject"
+            >
+              Guardar
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const logout = document.getElementById('logout');
-            if (logout) {
-                logout.addEventListener('click', (e) => {
-                    e.preventDefault();
-                    localStorage.removeItem('token');
-                    window.location.replace('index.html');
-                });
-            }
+      document.addEventListener("DOMContentLoaded", () => {
+        const logout = document.getElementById("logout");
+        if (logout) {
+          logout.addEventListener("click", (e) => {
+            e.preventDefault();
+            localStorage.removeItem("token");
+            window.location.replace("index.html");
+          });
+        }
+
+        //LOGICA DEL MODAL
+        const modal = document.getElementById("project-modal");
+        const openBtn = document.querySelector(".btn-add-project");
+        const closeElements = modal.querySelectorAll(
+          "[data-close], .modal__close"
+        );
+
+        function openModal() {
+          modal.classList.add("active");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        }
+
+        function closeModal() {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+
+        if (openBtn) openBtn.addEventListener("click", openModal);
+        closeElements.forEach((el) => el.addEventListener("click", closeModal));
+        document.addEventListener("keydown", (e) => {
+          if (e.key === "Escape" && modal.classList.contains("active")) {
+            closeModal();
+          }
         });
+      });
     </script>
-</body>
+
+    <script type="module">
+      import {
+        handleCreateProyect,
+        handleGetProyects,
+        handleDeleteProyect,
+        handleUpdateProyect,
+        handleGetProyectById,
+      } from "./../services/createproyect.services.js";
+
+      const form = document.querySelector("#projectForm");
+      const nameInput = document.getElementById("projectName");
+      const descripInput = document.getElementById("projectDesc");
+      const userIdInput = document.getElementById("projectUserId");
+      const techInput = document.getElementById("projectTech");
+      const repositoryInput = document.getElementById("projectRepo");
+      const imagesInput = document.getElementById("projectImages");
+      const submitBtn = document.getElementById("submitProject");
+      const modalTitle = document.getElementById("modal-title");
+      const addBtn = document.querySelector(".btn-add-project");
+
+      // Utilidad para listas separadas por comas
+      const parseCommaList = (v) =>
+        v
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+
+      // Renderizar proyectos en el listado
+      const listEl = document.getElementById("projectsList");
+      function renderProjects(projects = []) {
+        listEl.innerHTML = "";
+        if (!projects.length) {
+          listEl.innerHTML =
+            '<li class="project-item project-item--empty"><div class="project-card"><p class="project-card__description">No hay proyectos todavía.</p></div></li>';
+          return;
+        }
+        const tpl = document.getElementById("project-card-template");
+        projects.forEach((p) => {
+          const fragment = tpl.content.cloneNode(true);
+          const li = fragment.querySelector("li.project-item");
+          li.dataset.id = p._id || "";
+          fragment.querySelector(".project-card__title").textContent =
+            p.title || "(sin título)";
+          fragment.querySelector(".project-card__description").textContent =
+            p.description || "";
+          fragment.querySelector(".project-card__tech-list").textContent = (
+            p.technologies || []
+          ).join(", ");
+          const delBtn = fragment.querySelector("[data-del]");
+          const viewBtn = fragment.querySelector("[data-view]");
+          const editBtn = fragment.querySelector("[data-edit]");
+          delBtn.dataset.del = p._id || "";
+          viewBtn.dataset.id = p._id || "";
+          editBtn.dataset.id = p._id || "";
+
+          listEl.appendChild(fragment);
+        });
+      }
+
+      // Cargar proyectos desde la API
+      async function loadProjects() {
+        try {
+          const data = await handleGetProyects();
+          // data puede ser {projects: [...]} o array directo; ajustamos
+          const projects = Array.isArray(data) ? data : data.projects || [];
+          renderProjects(projects);
+        } catch (e) {
+          console.error("Load projects error", e);
+        }
+      }
+
+      // Submit para crear y luego refrescar
+      let editingId = null;
+
+      function openModal() {
+        const modal = document.getElementById("project-modal");
+        if (modal) {
+          modal.classList.add("active");
+          modal.setAttribute("aria-hidden", "false");
+          document.body.style.overflow = "hidden";
+        }
+      }
+      function closeModal() {
+        const modal = document.getElementById("project-modal");
+        if (modal) {
+          modal.classList.remove("active");
+          modal.setAttribute("aria-hidden", "true");
+          document.body.style.overflow = "";
+        }
+        editingId = null;
+        form.reset();
+        modalTitle.textContent = "Nuevo Proyecto";
+        if (submitBtn) submitBtn.style.display = "";
+      }
+
+      async function fillForm(project) {
+        nameInput.value = project.title || "";
+        descripInput.value = project.description || "";
+        techInput.value = (project.technologies || []).join(", ");
+        repositoryInput.value = project.repository || "";
+        imagesInput.value = (project.images || []).join(", ");
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const payload = {
+          title: nameInput.value.trim(),
+          description: descripInput.value.trim(),
+          technologies: parseCommaList(techInput.value.trim()),
+          repository: repositoryInput.value.trim(),
+          images: parseCommaList(imagesInput.value.trim()),
+        };
+        try {
+          if (editingId) {
+            await handleUpdateProyect(editingId, payload);
+          } else {
+            await handleCreateProyect(payload);
+          }
+          form.reset();
+          editingId = null;
+          document.getElementById("modal-title").textContent = "Nuevo Proyecto";
+          await loadProjects();
+          closeModal();
+        } catch (errorP) {
+          console.log(errorP);
+        }
+      });
+
+      // Delegación para eliminar proyecto
+      listEl.addEventListener("click", async (e) => {
+        const id = e.target.dataset.del;
+        if (!id) return;
+        try {
+          await handleDeleteProyect(id);
+          await loadProjects();
+        } catch (err) {
+          console.error("Delete project error", err);
+        }
+      });
+
+      // Delegación para ver detalles y editar
+      listEl.addEventListener("click", async (e) => {
+        if (e.target.matches("[data-view]")) {
+          const pid = e.target.dataset.id;
+
+          if (!pid) return;
+          try {
+            const proj = await handleGetProyectById(pid);
+            modalTitle.textContent = "Detalles Proyecto";
+            await fillForm(proj);
+            if (submitBtn) submitBtn.style.display = "none";
+            
+            openModal();
+          } catch (err) {
+            console.error("View project error", err);
+          }
+        } else if (e.target.matches("[data-edit]")) {
+          const pid = e.target.dataset.id;
+          if (!pid) return;
+          try {
+            const proj = await handleGetProyectById(pid);
+            editingId = pid;
+            modalTitle.textContent = "Editar Proyecto";
+            await fillForm(proj);
+            if (submitBtn) submitBtn.style.display = "";
+            openModal();
+          } catch (err) {
+            console.error("Edit project error", err);
+          }
+        }
+      });
+
+      // Asegurar que al crear (botón "New Project") el botón Guardar esté visible
+      if (addBtn) {
+        addBtn.addEventListener("click", () => {
+          editingId = null;
+          form.reset();
+          modalTitle.textContent = "Nuevo Proyecto";
+          if (submitBtn) submitBtn.style.display = "";
+        });
+      }
+
+      // Cargar al iniciar
+      document.addEventListener("DOMContentLoaded", loadProjects);
+    </script>
+  </body>
 </html>
