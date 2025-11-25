@@ -47,7 +47,7 @@
 
     <div class="container">
       <ul id="projectsList" class="projects-list">
-        <!-- Los proyectos se renderizan aquí -->
+        <!-- Los proyectos se renderizan aqui -->
       </ul>
       <!-- Template para una tarjeta de proyecto -->
       <template id="project-card-template">
@@ -341,7 +341,7 @@
         }
       });
 
-      // Delegación para eliminar proyecto
+      // Delegacion para eliminar proyecto
       listEl.addEventListener("click", async (e) => {
         const id = e.target.dataset.del;
         if (!id) return;
@@ -353,7 +353,7 @@
         }
       });
 
-      // Delegación para ver detalles y editar
+      // Delegacion para ver detalles y editar
       listEl.addEventListener("click", async (e) => {
         if (e.target.matches("[data-view]")) {
           const pid = e.target.dataset.id;
@@ -385,7 +385,7 @@
         }
       });
 
-      // Asegurar que al crear (botón "New Project") el botón Guardar esté visible
+      // Asegurar que al crear (boton "New Project") el boton Guardar este visible
       if (addBtn) {
         addBtn.addEventListener("click", () => {
           editingId = null;
