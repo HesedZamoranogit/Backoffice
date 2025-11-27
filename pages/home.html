@@ -53,6 +53,8 @@
       <template id="project-card-template">
         <li class="project-item" data-id="">
           <div class="project-card">
+            <img src="" alt="Project Image" class="project-card__image" />
+
             <div class="project-card__header">
               <h3 class="project-card__title"></h3>
             </div>
@@ -145,7 +147,7 @@
             <label class="form-field__label" for="projectImages">Images:</label>
             <input
               class="form-field__input"
-              type="url"
+              type="text"
               name="images"
               id="projectImages"
               placeholder="Image URLs separated by commas"
@@ -250,10 +252,12 @@
           return;
         }
         const tpl = document.getElementById("project-card-template");
+
         projects.forEach((p) => {
           const fragment = tpl.content.cloneNode(true);
           const li = fragment.querySelector("li.project-item");
           li.dataset.id = p._id || "";
+
           fragment.querySelector(".project-card__title").textContent =
             p.title || "(sin título)";
           fragment.querySelector(".project-card__description").textContent =
@@ -261,6 +265,22 @@
           fragment.querySelector(".project-card__tech-list").textContent = (
             p.technologies || []
           ).join(", ");
+
+          // Mostrar imagen si existe (primer elemento de images[] o string)
+          const imgEl = fragment.querySelector(".project-card__image");
+          let imgUrl = "";
+          if (Array.isArray(p.images) && p.images.length > 0) {
+            imgUrl = p.images[0];
+          } else if (typeof p.images === "string" && p.images) {
+            imgUrl = p.images;
+          }
+          if (imgUrl) {
+            imgEl.src = imgUrl;
+            imgEl.style.display = "";
+          } else {
+            imgEl.style.display = "none";
+          }
+
           const delBtn = fragment.querySelector("[data-del]");
           const viewBtn = fragment.querySelector("[data-view]");
           const editBtn = fragment.querySelector("[data-edit]");
@@ -276,7 +296,7 @@
       async function loadProjects() {
         try {
           const data = await handleGetProyects();
-          // data puede ser {projects: [...]} o array directo; ajustamos
+          // data puede ser {projects: [...]} o array directo ajustamos
           const projects = Array.isArray(data) ? data : data.projects || [];
           renderProjects(projects);
         } catch (e) {
@@ -364,7 +384,7 @@
             modalTitle.textContent = "Detalles Proyecto";
             await fillForm(proj);
             if (submitBtn) submitBtn.style.display = "none";
-            
+
             openModal();
           } catch (err) {
             console.error("View project error", err);
