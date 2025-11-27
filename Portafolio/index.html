@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Portafolio</title>
+  </head>
+  <body>
+    <canvas id="bg-balls" aria-hidden="true"></canvas>
+    <header class="site-header">
+      <div class="container nav">
+        <a class="logo" href="#">EVO</a>
+        <nav class="menu">
+          <a href="#hero">Inicio</a>
+          <a href="#sobre-mi">Sobre mí</a>
+          <a href="#proyectos">Proyectos</a>
+          <a href="#metas">Blog</a>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="seccion_principal hero">
+        <div class="container hero-grid">
+          <div class="hero-content">
+            <div class="presentacion-img"></div>
+            <div class="presentacion">
+              <h1>MI PORTAFOLIO :)</h1>
+              <p>
+                Bienvenido a mi portafolio, donde comparto mis proyectos y
+                experiencias como desarrolladora de software.
+              </p>
+              <div class="actions">
+                <a class="btn" href="#proyectos">Ver proyectos</a>
+                <a class="btn ghost" href="#contacto">Hablemos</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="sobre-mi" class="section">
+        <div class="container">
+          <h2>Sobre mí</h2>
+          <p>
+            Soy una ingeniera de la carrera de Software y me especializo en
+            tecnologias como:
+          </p>
+        </div>
+        <div class="sobre-mi_tecnologias">
+          <div class="sobre-mi_tecnologias2">
+            <div class="mini_card">
+              <img src="./img/React.webp" alt="logo_REACT" class="tech_image" />
+              <label for="">REACT + Vite</label>
+            </div>
+            <div class="mini_card">
+              <img src="./img/Typescript_logo.webp" alt="" class="tech_image" />
+              <label for="">TypeScript</label>
+            </div>
+            <div class="mini_card">
+              <img src="./img/javascript_logo.webp" alt="" class="tech_image" />
+              <label for="">JavaScript</label>
+            </div>
+            <div class="mini_card">
+              <img src="./img/HTML_Y_CSS.webp" alt="" class="tech_image" />
+              <label for="">HTML CSS</label>
+            </div>
+            <div class="mini_card">
+              <img src="./img/postgres.webp" alt="" class="tech_image" />
+              <label for="">Nociones basicas de PostgresSQL</label>
+            </div>
+          </div>
+          <div>
+            <img src="./img/𝐈𝐙𝐔𝐊𝐔.jpg" alt="" class="dekuuu" />
+          </div>
+        </div>
+        <p>
+          Aun que se que me falta mucho por aprender estoy dispuesta a seguir
+          aprendiendo cosas nuevas para crecer profesionalmente.
+        </p>
+      </section>
+
+      <section id="proyectos" class="section alt">
+        <div class="container">
+          <h2>Proyectos</h2>
+          <div id="projects-grid" class="grid-3"></div>
+        </div>
+      </section>
+
+      <section id="blog" class="section">
+        <div class="container">
+          <h2>Últimos artículos</h2>
+          <div class="grid-3">
+            <article class="post">
+              <h3>NIVEL DE INGLES</h3>
+              <p>
+                B2 <br />
+                Sigo aprendiendo cosidero que puedo mantener medianamente una
+                comversacion
+              </p>
+            </article>
+            <article class="post">
+              <h3>Sigo Aprendiendo...</h3>
+              <p>
+                Se que no soy una experta en react o typescript pero aun sigo
+                haciendo proyectos utilizando estos lenguajes y tecnologias para
+                aprender mas de ellas
+              </p>
+            </article>
+            <article class="post">
+              <h3>Hago uso de buenas practicas</h3>
+              <p>
+                Intento ser un poco de semantica en html y de reutilizar el css
+                <br />
+                siempre intento hacer las cosas con buena optimizacion y ponerme
+                al dia de cualquier actualizacion
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="metas" class="section alt">
+        <div class="container">
+          <h2>Metas a futuro</h2>
+          <p>
+            Mis metas a futuro son seguir aprendiendo nuevas tecnologias y
+            lenguajes de programacion para poder desenvolverme en cualquier area
+            del desarrollo de software <br>
+            pdt: quiero feria u.u
+          </p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container">
+        <p>© 2025 HESED ZAMORANO. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+    <script type="module">
+      import { handleGetProyectos } from "./script.js";
+
+      async function renderProjects() {
+        const grid = document.getElementById("projects-grid");
+        try {
+          //dado caso de que no existan proyectos
+          const data = await handleGetProyectos(251940);
+          const projects = Array.isArray(data) ? data : data?.projects || [];
+          if (!projects.length) {
+            grid.innerHTML = "<p>No hay proyectos publicados.</p>";
+            return;
+          }
+          //LA ITERACION DE CADA PROYECTO EN LAS CARDS
+          //con un forEach
+          //USAMOS UN FRAGMENTO PARA MEJORAR EL RENDIMIENTO AL HACER VARIAS INSERCIONES EN EL DOM
+          const frag = document.createDocumentFragment();
+          projects.forEach((p) => {
+            const article = document.createElement("article");
+            article.className = "card";
+
+            const thumb = document.createElement("div");
+            thumb.className = "thumb";
+            const imageUrl =
+              (Array.isArray(p.images) && p.images[0]) ||
+              p.imageUrl ||
+              p.image ||
+              p.thumbnail ||
+              p.cover ||
+              (p.image && p.image.url) ||
+              (p.thumbnail && p.thumbnail.url) ||
+              "";
+            if (imageUrl) {
+              const img = document.createElement("img");
+              img.src = imageUrl;
+              img.alt = p.title || p.name || "Proyecto";
+              img.onerror = () => {
+                thumb.innerHTML = "";
+              };
+              thumb.innerHTML = "";
+              thumb.appendChild(img);
+            }
+            article.appendChild(thumb);
+
+            //CARGAMOS LOS DATOS DE CADA PROYECTO EN UNA CARTA DE ESTA MANERA
+            const h3 = document.createElement("h3");
+            h3.textContent = p.title || p.name || "Proyecto";
+            article.appendChild(h3);
+
+            const techs = document.createElement("p");
+            techs.textContent = p.technologies
+              ? `Tecnologías: ${p.technologies.join(", ")}`
+              : "";
+            article.appendChild(techs);
+
+            const desc = document.createElement("p");
+            desc.textContent = p.description || p.resume || "";
+            article.appendChild(desc);
+
+            const a = document.createElement("a");
+            a.className = "link";
+            a.href = p.url || p.link || p.repository || "#";
+            a.target = "_blank";
+            a.rel = "noopener";
+            article.appendChild(a);
+
+            frag.appendChild(article);
+          });
+
+          grid.innerHTML = "";
+          grid.appendChild(frag);
+        } catch (err) {
+          console.error(err);
+          grid.innerHTML = "<p>Error al cargar proyectos.</p>";
+        }
+      }
+
+      renderProjects();
+    </script>
+
+    <script>
+      (function () {
+        const canvas = document.getElementById("bg-balls");
+        if (!canvas) return;
+        const ctx = canvas.getContext("2d");
+        // Colores de fondo del canvas (ajusta aquí)
+        const BG_SOLID = "#0a0f1b"; // Color base del fondo
+        const BG_TRAIL = "rgba(10,15,27,0.06)"; // Color de 'estela' (mismo tono con alfa)
+        let dpr = Math.min(window.devicePixelRatio || 1, 2);
+        let width = 0,
+          height = 0;
+        let balls = [];
+
+        const prefersReduced = window.matchMedia(
+          "(prefers-reduced-motion: reduce)"
+        ).matches;
+
+        function resize() {
+          width = window.innerWidth;
+          height = window.innerHeight;
+          canvas.style.width = width + "px";
+          canvas.style.height = height + "px";
+          canvas.width = Math.max(1, Math.floor(width * dpr));
+          canvas.height = Math.max(1, Math.floor(height * dpr));
+          ctx.setTransform(1, 0, 0, 1, 0, 0);
+          ctx.scale(dpr, dpr);
+        }
+
+        function rand(min, max) {
+          return Math.random() * (max - min) + min;
+        }
+
+        function createBalls() {
+          const density = prefersReduced ? 0 : 0.00006; // bolas por pixel
+          const target = Math.max(
+            8,
+            Math.min(50, Math.floor(width * height * density))
+          );
+          balls = new Array(target).fill(0).map(() => ({
+            x: rand(0, width),
+            y: rand(0, height),
+            r: rand(12, 48),
+            vx: rand(-0.3, 0.3) || 0.12,
+            vy: rand(-0.25, 0.25) || -0.1,
+            seed: rand(0, 1000),
+            color:
+              Math.random() < 0.5
+                ? "rgba(34,211,238,0.10)" /* cyan */
+                : "rgba(59,130,246,0.08)" /* blue */,
+          }));
+        }
+
+        function scribblePath(x, y, r, seed, t, wobble = 0.06, seg = 46) {
+          const phase = t * 0.002 + seed * 0.013;
+          for (let i = 0; i <= seg; i++) {
+            const a = (i / seg) * Math.PI * 2;
+            const jitter =
+              1 +
+              wobble * Math.sin(3 * a + phase) +
+              wobble * 0.6 * Math.cos(5 * a + phase * 0.7);
+            const rr = r * jitter;
+            const px = x + rr * Math.cos(a);
+            const py = y + rr * Math.sin(a);
+            if (i === 0) ctx.moveTo(px, py);
+            else ctx.lineTo(px, py);
+          }
+        }
+
+        function drawScribbleCircle(b, t) {
+          // Relleno suave
+          ctx.beginPath();
+          scribblePath(b.x, b.y, b.r, b.seed, t, 0.05, 40);
+          ctx.closePath();
+          ctx.fillStyle = b.color;
+          ctx.fill();
+
+          // Trazos tipo "dibujo a mano"
+          ctx.lineWidth = 1.2;
+          for (let k = 0; k < 3; k++) {
+            ctx.beginPath();
+            const wobble = 0.09 + k * 0.02;
+            scribblePath(
+              b.x,
+              b.y,
+              b.r + k * 0.6,
+              b.seed + k * 10,
+              t,
+              wobble,
+              36
+            );
+            ctx.closePath();
+            ctx.strokeStyle =
+              k === 0 ? "rgba(255,255,255,0.06)" : "rgba(34,211,238,0.12)";
+            ctx.stroke();
+          }
+        }
+
+        function step(now) {
+          // Fondo con desvanecimiento para crear estelas sutiles
+          ctx.globalCompositeOperation = "source-over";
+          ctx.fillStyle = BG_TRAIL;
+          ctx.fillRect(0, 0, width, height);
+
+          for (const b of balls) {
+            b.x += b.vx;
+            b.y += b.vy;
+            if (b.x - b.r > width) b.x = -b.r;
+            if (b.x + b.r < 0) b.x = width + b.r;
+            if (b.y - b.r > height) b.y = -b.r;
+            if (b.y + b.r < 0) b.y = height + b.r;
+
+            drawScribbleCircle(b, now || performance.now());
+          }
+          requestAnimationFrame(step);
+        }
+
+        resize();
+        createBalls();
+        if (!prefersReduced) {
+          // Arranque con un lienzo lleno del color de fondo sólido
+          ctx.fillStyle = BG_SOLID;
+          ctx.fillRect(0, 0, width, height);
+          requestAnimationFrame(step);
+        } else {
+          // Dibujo estático (sin animación) respetando reduced-motion
+          for (const b of balls) {
+            drawScribbleCircle(b, performance.now());
+          }
+        }
+        window.addEventListener("resize", () => {
+          resize();
+          createBalls();
+        });
+      })();
+    </script>
+  </body>
+</html>
