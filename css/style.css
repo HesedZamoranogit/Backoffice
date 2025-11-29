@@ -1,5 +1,21 @@
+:root {
+  /*Variables de css */
+  --color-bg-start: #8c8c8c;
+  --color-bg-end: #131313;
+  --color-text: #ffffff;
+  --color-muted-text: #e0e0e0;
+  --color-muted-2: #b3b3b3;
+  --color-primary: #4d97bf;
+  --color-surface: #2d2d2d;
+  --color-surface-2: #222224;
+  --color-input-bg: #5f5f5f;
+  --color-button-bg: #000000;
+  --color-button-hover: #3a3a3a;
+  --color-shadow: rgba(0, 0, 0, 0.3);
+}
+
 body {
-  background: linear-gradient(to bottom, #8c8c8c, #131313);
+  background: linear-gradient(to bottom, var(--color-bg-start), var(--color-bg-end));
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   min-height: 100vh;
   margin: 0;
@@ -13,10 +29,10 @@ body {
   flex-direction: row;
   width: 850px;
   min-height: 500px;
-  background-color: #2d2d2d;
+  background-color: var(--color-surface);
   border-radius: 16px;
   overflow: hidden;
-  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 4px 24px var(--color-shadow);
   justify-content: right;
 }
 
@@ -25,7 +41,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #222224;
+  background: var(--color-surface-2);
 }
 .banner__img--img {
   width: 100%;
@@ -46,13 +62,13 @@ body {
   text-align: center;
 }
 .banner__titulo {
-  color: white;
+  color: var(--color-text);
   font-size: 2rem;
   margin: 0;
   font-weight: bold;
 }
 .banner__descripcion {
-  color: #e0e0e0;
+  color: var(--color-muted-text);
   font-size: 1rem;
   margin-top: 8px;
   font-weight: 300;
@@ -78,7 +94,7 @@ body {
   gap: 5px;
 }
 .form-group__label {
-  color: white;
+  color: var(--color-text);
   font-size: 1rem;
   font-weight: 400;
 }
@@ -91,7 +107,7 @@ body {
 .form-group__radio {
   width: 20px;
   height: 20px;
-  accent-color: #4d97bf;
+  accent-color: var(--color-primary);
 }
 .form-group__radio-label {
   color: hsl(200, 9%, 81%);
@@ -103,8 +119,8 @@ body {
   width: 100%;
   font-size: 1rem;
   padding: 8px;
-  color: #ffffff;
-  background-color: #5f5f5f;
+  color: var(--color-text);
+  background-color: var(--color-input-bg);
   border: none;
   border-radius: 4px;
 }
@@ -119,17 +135,17 @@ body {
   flex-direction: row;
   align-items: center;
   gap: 8px;
-  color: white;
+  color: var(--color-text);
   font-size: 1rem;
   font-weight: 300;
 }
 .form-group__checkbox {
   width: 20px;
   height: 20px;
-  accent-color: #4d97bf;
+  accent-color: var(--color-primary);
 }
 .form-group__checkbox-label {
-  color: white;
+  color: var(--color-text);
   font-size: 1rem;
   font-weight: 300;
 }
@@ -137,10 +153,10 @@ body {
 .banner__button {
   width: 100%;
   padding: 12px 0;
-  background-color: #000000;
+  background-color: var(--color-button-bg);
   border: none;
   border-radius: 4px;
-  color: white;
+  color: var(--color-text);
   font-size: 1rem;
   font-weight: 500;
   cursor: pointer;
@@ -148,13 +164,13 @@ body {
   transition: background 0.3s, transform 0.3s;
 }
 .banner__button:hover {
-  background-color: #3a3a3a;
+  background-color: var(--color-button-hover);
   transform: scale(1.02);
 }
 
 .banner__forgetpassword {
   width: 100%;
-  color: #b3b3b3;
+  color: var(--color-muted-2);
   text-decoration: underline;
   font-size: 1rem;
   font-weight: 300;
@@ -166,7 +182,7 @@ body {
   align-items: center;
 }
 .banner__forgetpassword:hover {
-  color: #fff;
+  color: var(--color-text);
 }
 
 @media (max-width: 768px) {
